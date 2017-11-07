@@ -1,0 +1,4 @@
+
+export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
+export const VALIDATE_SUCCESS = 'VALIDATE_SUCCESS';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
