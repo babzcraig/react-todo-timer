@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TimersDashboard from './TimersDashboard';
+import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 import { Provider } from 'react-redux';  
@@ -14,6 +14,6 @@ const store = createStoreWithMiddleware(reducers);
 
 ReactDOM.render(
   <Provider store={store}>
-    <TimersDashboard />
+    <App />
   </Provider>, document.getElementById('content'));
 registerServiceWorker();

@@ -1,27 +1,24 @@
 import React, { Component } from 'react';
-import EditableTimerList from './components/EditableTimerList';
-import ToggleableTimerForm from './components/ToggleableTimerForm';
-import uuid from 'uuid';
+import EditableTimerList from './EditableTimerList';
+import ToggleableTimerForm from './ToggleableTimerForm';
+import { connect } from 'react-redux';
+import { fetchTimers } from '../actions/actions';
 
 class TimersDashboard extends Component {
   state = {
-    timers: [
-      {
-        title: 'Practice squat',
-        project: 'Gym Chores',
-        id: uuid.v4(),
-        elapsed: 5456099,
-        runningSince: Date.now(),
-      },
-      {
-        title: 'Bake squash',
-        project: 'Kitchen Chores',
-        id: uuid.v4(),
-        elapsed: 1273998,
-        runningSince: null,
-      },
-    ],
+    timers: []
   };
+
+  componentDidMount() {
+    // dispatch an action to get a list of todos
+    this.props.fetchTimers();
+  }
+
+  componentWillReceiveProps({timers}) {
+    // When we receive the updated redux state via props update the state. This helps
+    // avoid a double render had we put it elsewhere
+    this.setState({ timers: timers})
+  }
 
   handleCreateFormSubmit = (timer) => {
     this.createTimer(timer);
@@ -137,4 +134,12 @@ class TimersDashboard extends Component {
   }
 }
 
-export default TimersDashboard;
+const mapStateToProps = ({todoReducer}) => {
+  const { timers } = todoReducer;
+  console.log('fired', timers);
+  return {
+    timers
+  };
+}
+
+export default connect(mapStateToProps, {fetchTimers})(TimersDashboard);

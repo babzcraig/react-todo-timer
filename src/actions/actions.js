@@ -1,63 +1,36 @@
-import { LOG_IN_SUCCESS, VALIDATE_SUCCESS, LOGOUT_SUCCESS } from './types';  
-import axios from 'axios';
-import api from '../api';
+import { FETCH_TIMERS_SUCCESS } from './types';  
+import uuid from 'uuid';
 
-export function logInUser(credentials) {  
-  return dispatch => {
-    return api.login(credentials)
-      .then(user => {
-        dispatch(loginSuccess(user));
-      })
-      .catch(err => {
-        //handle login errors
-      })
-  }
-}
+const timers = [
+  {
+    title: 'Practice squat',
+    project: 'Gym Chores',
+    id: uuid.v4(),
+    elapsed: 5456099,
+    runningSince: Date.now(),
+  },
+  {
+    title: 'Bake squash',
+    project: 'Kitchen Chores',
+    id: uuid.v4(),
+    elapsed: 1273998,
+    runningSince: null,
+  },
+];
 
-export function validateToken() {
-  return dispatch => {
-    return api.validateToken()
-      .then(user => {
-        dispatch(validateSuccss(user));
-      })
-      .catch(err => {
-        //handle login errors
-      })
-  }
-}
-
-export function logoutUser() {
-  return dispatch => {
-    return api.logout()
-      .then(user => {
-        dispatch(logoutSuccess());
-      })
-      .catch(err => {
-        //handle login errors
-      })
-  }
-}
-
-
-
-// HELPER FUNCTIONS
-function loginSuccess(userData) {
+export function fetchTimers() {
+  console.log('action called');
   return {
-    type: LOG_IN_SUCCESS,
-    payload: userData
+    type: FETCH_TIMERS_SUCCESS,
+    payload: timers
   }
 }
 
-function validateSuccss(userData) {
+// HELPERS
+function fetchTimersSuccess(timers) {
   return {
-    type: VALIDATE_SUCCESS,
-    payload: userData
-  }
-}
-
-function logoutSuccess() {
-  return {
-    type: LOGOUT_SUCCESS
+    type: FETCH_TIMERS_SUCCESS,
+    payload: timers
   }
 }
 
