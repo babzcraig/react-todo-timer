@@ -17,18 +17,12 @@ class TimersDashboard extends Component {
   componentWillReceiveProps({timers}) {
     // When we receive the updated redux state via props update the state. This helps
     // avoid a double render had we put it elsewhere
-    this.setState({ timers: timers})
+    console.log('receiving...', timers)
+    this.setState({ timers: timers});
   }
 
   handleCreateFormSubmit = (timer) => {
     this.createTimer(timer);
-  };
-
-  createTimer = (timer) => {
-    const t = this.newTimer(timer);
-    this.setState({
-      timers: this.state.timers.concat(t),
-    });
   };
 
   handleEditFormSubmit = (attrs) => {
@@ -60,16 +54,6 @@ class TimersDashboard extends Component {
     });
   }
 
-  newTimer(attrs = {}) {
-    const timer = {
-      title: attrs.title || 'Timer',
-      project: attrs.project || 'Project',
-      id: uuid.v4(), // eslint-disable-line no-undef
-      elapsed: 0,
-    };
-
-    return timer;
-  }
 
   handleStartClick = (timerId) => {
     this.startTimer(timerId);
@@ -125,9 +109,7 @@ class TimersDashboard extends Component {
             onStartClick={this.handleStartClick}
             onStopClick={this.handleStopClick}          
           />
-          <ToggleableTimerForm
-            onFormSubmit={this.handleCreateFormSubmit}
-          />
+          <ToggleableTimerForm />
         </div>
       </div>
     );
@@ -136,7 +118,6 @@ class TimersDashboard extends Component {
 
 const mapStateToProps = ({todoReducer}) => {
   const { timers } = todoReducer;
-  console.log('fired', timers);
   return {
     timers
   };

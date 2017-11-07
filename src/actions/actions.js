@@ -1,4 +1,4 @@
-import { FETCH_TIMERS_SUCCESS } from './types';  
+import { FETCH_TIMERS_SUCCESS, CREATE_TIMER_SUCCESS } from './types';  
 import uuid from 'uuid';
 
 const timers = [
@@ -19,18 +19,29 @@ const timers = [
 ];
 
 export function fetchTimers() {
-  console.log('action called');
   return {
     type: FETCH_TIMERS_SUCCESS,
     payload: timers
   }
 }
 
+export function createTimer(timer) {
+    const t = newTimer(timer);
+    return {
+      type: CREATE_TIMER_SUCCESS,
+      payload: t
+    }
+}
+
 // HELPERS
-function fetchTimersSuccess(timers) {
-  return {
-    type: FETCH_TIMERS_SUCCESS,
-    payload: timers
-  }
+function newTimer(attrs = {}) {
+  const timer = {
+    title: attrs.title || 'Timer',
+    project: attrs.project || 'Project',
+    id: uuid.v4(), // eslint-disable-line no-undef
+    elapsed: 0,
+  };
+
+  return timer;
 }
 

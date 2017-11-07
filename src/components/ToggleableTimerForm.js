@@ -1,5 +1,7 @@
 import React from 'react';
 import TimerForm from './TimerForm';
+import { connect } from 'react-redux';
+import { createTimer } from '../actions/actions';
 
 class ToggleableTimerForm extends React.Component {
   state = {
@@ -15,8 +17,8 @@ class ToggleableTimerForm extends React.Component {
   };
 
   handleFormSubmit = (timer) => {
-    this.props.onFormSubmit(timer);
     this.setState({ isOpen: false });
+    this.props.createTimer(timer);
   };
 
   render() {
@@ -42,5 +44,7 @@ class ToggleableTimerForm extends React.Component {
   }
 }
 
-export default ToggleableTimerForm;
+
+export default connect(null, {createTimer})(ToggleableTimerForm);
+
 
