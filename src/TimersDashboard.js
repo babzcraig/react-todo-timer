@@ -34,6 +34,35 @@ class TimersDashboard extends Component {
     });
   };
 
+  handleEditFormSubmit = (attrs) => {
+    this.updateTimer(attrs);
+  };
+
+  handleTrashClick = (timerId) => {
+    this.deleteTimer(timerId);
+  };
+
+  deleteTimer = (timerId) => {
+    this.setState({
+      timers: this.state.timers.filter(t => t.id !== timerId),
+    });
+  };
+
+  updateTimer = (attrs) => {
+    this.setState({
+      timers: this.state.timers.map((timer) => {
+        if (timer.id === attrs.id) {
+          return Object.assign({}, timer, {
+            title: attrs.title,
+            project: attrs.project,
+          });
+        } else {
+          return timer;
+        }
+      }),
+    });
+  }
+
   newTimer(attrs = {}) {
     const timer = {
       title: attrs.title || 'Timer',
@@ -53,6 +82,8 @@ class TimersDashboard extends Component {
         <div className='column'>
           <EditableTimerList 
             timers={this.state.timers}
+            onFormSubmit={this.handleEditFormSubmit}
+            onTrashClick={this.handleTrashClick}            
           />
           <ToggleableTimerForm
             onFormSubmit={this.handleCreateFormSubmit}

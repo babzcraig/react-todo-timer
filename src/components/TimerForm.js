@@ -3,18 +3,17 @@ import TextInput from './TextInput';
 
 class TimerForm extends React.Component {
   state = {
-    fields: {},
-    fieldErrors: {}
+    fields: {
+      title: this.props.title || "",
+      project: this.props.project || ""
+    }
   };
 
-  onInputChange = ({ name, value, error }) => {
+  onInputChange = ({ name, value }) => {
     const fields = this.state.fields;
-    const fieldErrors = this.state.fieldErrors;
-
     fields[name] = value;
-    fieldErrors[name] = error;
 
-    this.setState({ fields, fieldErrors });
+    this.setState({ fields });
   };
 
   handleSubmit = () => {
@@ -23,6 +22,11 @@ class TimerForm extends React.Component {
       title: this.state.fields.title,
       project: this.state.fields.project,
     });
+
+    this.setState({ fields: {
+      title: "",
+      project: ""
+    }})
   };
   
   render() {
