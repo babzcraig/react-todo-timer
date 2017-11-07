@@ -55,7 +55,7 @@ class TimersDashboard extends Component {
             timers={this.state.timers}
           />
           <ToggleableTimerForm
-            isOpen={true}
+            onFormSubmit={this.handleCreateFormSubmit}
           />
         </div>
       </div>
